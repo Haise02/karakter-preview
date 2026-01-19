@@ -632,9 +632,41 @@
 
 <script>
   (function(){
-    document.querySelectorAll('.gantt .row').forEach(row => {
-      row.querySelectorAll('.cell').forEach(cell => {
-        cell.addEventListener('click', () => cell.classList.toggle('selected'));
+    const storageKey = 'karakter_gantt_selected_v1';
+
+    function readSelected(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return new Set();
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) return new Set();
+        return new Set(arr);
+      }catch(e){
+        return new Set();
+      }
+    }
+
+    function writeSelected(set){
+      try{
+        localStorage.setItem(storageKey, JSON.stringify(Array.from(set)));
+      }catch(e){
+      }
+    }
+
+    const selected = readSelected();
+
+    document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
+      const cells = Array.from(row.querySelectorAll('.cell'));
+      cells.forEach((cell, cellIndex) => {
+        const key = `${rowIndex}:${cellIndex}`;
+        if(selected.has(key)) cell.classList.add('selected');
+
+        cell.addEventListener('click', () => {
+          cell.classList.toggle('selected');
+          if(cell.classList.contains('selected')) selected.add(key);
+          else selected.delete(key);
+          writeSelected(selected);
+        });
       });
     });
   })();
