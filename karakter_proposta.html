@@ -240,6 +240,33 @@
       font-size:12.8px;
       max-width: 82ch;
     }
+    .gantt-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--ink);
+      border-radius:12px;
+      padding:7px 10px;
+      font-weight:750;
+      font-size:12.5px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.10)}
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{
+      background:transparent;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-weight:700;
+    }
     .gantt-scroll{
       overflow:auto;
       padding:0;
@@ -610,7 +637,13 @@
                 <p>
                   </p>
               </div>
-              <div class="print-hint">Suggerimento: puoi stampare in PDF dal browser</div>
+              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+                <div class="gantt-actions" aria-label="Azioni Gantt">
+                  <button type="button" class="btn" id="copyGanttLink">Copia link con Gantt</button>
+                  <button type="button" class="btn ghost" id="resetGantt">Reset</button>
+                </div>
+                <div class="print-hint">Suggerimento: puoi stampare in PDF dal browser</div>
+              </div>
             </div>
 
             <div class="gantt-scroll">
@@ -658,6 +691,43 @@
   (function(){
     const storageKey = 'karakter_gantt_selected_v1';
 
+    function base64UrlEncode(str){
+      return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    }
+
+    function base64UrlDecode(str){
+      const s = str.replace(/-/g,'+').replace(/_/g,'/');
+      const pad = s.length % 4;
+      const padded = pad ? (s + '='.repeat(4 - pad)) : s;
+      return atob(padded);
+    }
+
+    function readSelectedFromHash(){
+      const hash = (location.hash || '').replace(/^#/, '');
+      if(!hash) return null;
+      const m = hash.match(/(?:^|&)g=([^&]+)/);
+      if(!m) return null;
+      try{
+        const decoded = base64UrlDecode(decodeURIComponent(m[1]));
+        const arr = JSON.parse(decoded);
+        if(!Array.isArray(arr)) return null;
+        return new Set(arr);
+      }catch(e){
+        return null;
+      }
+    }
+
+    function writeHashFromSelected(set){
+      try{
+        const arr = Array.from(set);
+        const encoded = encodeURIComponent(base64UrlEncode(JSON.stringify(arr)));
+        const newHash = `g=${encoded}`;
+        if(history && history.replaceState) history.replaceState(null, '', `#${newHash}`);
+        else location.hash = newHash;
+      }catch(e){
+      }
+    }
+
     function readSelected(){
       try{
         const raw = localStorage.getItem(storageKey);
@@ -677,7 +747,26 @@
       }
     }
 
-    const selected = readSelected();
+    const selected = readSelectedFromHash() || readSelected();
+    writeSelected(selected);
+
+    function applySelectedToDom(){
+      document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
+        const cells = Array.from(row.querySelectorAll('.cell'));
+        cells.forEach((cell, cellIndex) => {
+          const key = `${rowIndex}:${cellIndex}`;
+          cell.classList.toggle('selected', selected.has(key));
+        });
+      });
+    }
+
+    function resetAll(){
+      selected.clear();
+      applySelectedToDom();
+      writeSelected(selected);
+      if(history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+      else location.hash = '';
+    }
 
     document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
       const cells = Array.from(row.querySelectorAll('.cell'));
@@ -693,6 +782,25 @@
         });
       });
     });
+
+    const copyBtn = document.getElementById('copyGanttLink');
+    if(copyBtn){
+      copyBtn.addEventListener('click', async () => {
+        writeHashFromSelected(selected);
+        const url = location.href;
+        try{
+          if(navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(url);
+          else window.prompt('Copia questo link:', url);
+        }catch(e){
+          window.prompt('Copia questo link:', url);
+        }
+      });
+    }
+
+    const resetBtn = document.getElementById('resetGantt');
+    if(resetBtn){
+      resetBtn.addEventListener('click', () => resetAll());
+    }
   })();
 </script>
 
