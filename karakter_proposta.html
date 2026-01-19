@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proposta Strategica 2026 — Karakter Coaching School</title>
+  <style>
+    :root{
+      --ink:#e9e7ff;
+      --muted:#b6b2d9;
+      --line:#2a2740;
+      --card:#1b1830;
+      --bg:#151327;
+      --accent:#a78bfa;      /* violet */
+      --accent-2:#7c3aed;    /* deep violet */
+      --ok:#34d399;
+      --warn:#fbbf24;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.45;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .page{
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 18px 48px;
+    }
+    .doc{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    }
+    .cover{
+      padding:28px 28px 22px;
+      background:
+        radial-gradient(1200px 380px at 10% 0%, rgba(167,139,250,.22), transparent 60%),
+        radial-gradient(900px 320px at 90% 10%, rgba(124,58,237,.20), transparent 55%),
+        linear-gradient(180deg, #1b1830, #1b1830);
+      border-bottom:1px solid var(--line);
+    }
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:6px 10px;
+      border:1px solid rgba(167,139,250,.35);
+      border-radius:999px;
+      background:rgba(167,139,250,.10);
+      color:var(--accent);
+      font-weight:600;
+      font-size:12.5px;
+      letter-spacing:.2px;
+    }
+    .kicker .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    h1{
+      margin:14px 0 6px;
+      font-size:30px;
+      letter-spacing:-.4px;
+      line-height:1.15;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:14.5px;
+      max-width: 72ch;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:999px;
+      padding:6px 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pill b{color:var(--ink); font-weight:650}
+    .body{
+      padding: 22px 28px 30px;
+    }
+    .section{
+      padding: 18px 0;
+      border-top:1px solid var(--line);
+    }
+    .section:first-child{border-top:0;padding-top:8px}
+    h2{
+      font-size:18px;
+      margin:0 0 10px;
+      letter-spacing:-.2px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:16px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      padding:14px 14px 12px;
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:14.5px;
+      letter-spacing:-.15px;
+    }
+    .card p{margin:0;color:var(--muted);font-size:13.5px}
+    ul.clean{
+      list-style:none;
+      padding:0;margin:0;
+      display:grid;
+      gap:10px;
+    }
+    .li{
+      display:flex; gap:10px;
+      align-items:flex-start;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+    }
+    .badge{
+      width:30px; height:30px;
+      border-radius:10px;
+      border:1px solid rgba(167,139,250,.35);
+      background:rgba(167,139,250,.10);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800;
+      color:var(--ink);
+      flex:0 0 auto;
+    }
+    .li b{display:block;font-size:13.5px;margin-bottom:2px}
+    .li span{display:block;color:var(--muted);font-size:13px}
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+    }
+    .table th, .table td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      font-size:13.5px;
+      color:rgba(233,231,255,.86);
+    }
+    .table th{
+      background:rgba(167,139,250,.14);
+      text-align:left;
+      font-weight:800;
+      color:var(--ink);
+    }
+    .table tr:last-child td{border-bottom:0}
+    .note{
+      color:var(--muted);
+      font-size:12.5px;
+      margin-top:10px;
+    }
+    .links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+      font-size:13px;
+    }
+    .links a{
+      border:1px solid rgba(255,255,255,.10);
+      background:#ffffff;
+      color:var(--accent-2);
+      border-radius:999px;
+      padding:7px 10px;
+      font-weight:700;
+    }
+
+    /* Gantt */
+    .gantt-wrap{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+    .gantt-head{
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .gantt-head h3{
+      margin:0;
+      font-size:14.5px;
+      letter-spacing:-.15px;
+    }
+    .gantt-head p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:12.8px;
+      max-width: 82ch;
+    }
+    .gantt-scroll{
+      overflow:auto;
+      padding:0;
+    }
+    .gantt{
+      min-width: 2600px;
+    }
+    .gantt .months{
+      display:grid;
+      grid-template-columns: 320px repeat(12, 1fr);
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      position:sticky;
+      top:0;
+      z-index:2;
+    }
+    .gantt .months div{
+      padding:10px 10px;
+      font-size:12.5px;
+      font-weight:750;
+      border-right:1px solid var(--line);
+      white-space:nowrap;
+    }
+    .gantt .months div:first-child{border-right:1px solid var(--line)}
+    .gantt .months div:last-child{border-right:0}
+    .gantt .weeks{
+      display:grid;
+      grid-template-columns: 320px repeat(48, 44px);
+      border-bottom:1px solid var(--line);
+      background:rgba(2,6,23,.015);
+      position:sticky;
+      top:41px;
+      z-index:1;
+    }
+    .gantt .weeks div{
+      padding:7px 0;
+      font-size:11px;
+      text-align:center;
+      border-right:1px solid var(--line);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .gantt .weeks div:first-child{
+      padding:7px 10px;
+      text-align:left;
+      font-weight:700;
+      color:#0b1220;
+    }
+    .gantt .row{
+      display:grid;
+      grid-template-columns: 320px repeat(48, 44px);
+      border-bottom:1px solid var(--line);
+    }
+    .gantt .task{
+      padding:10px 10px;
+      border-right:1px solid var(--line);
+    }
+    .gantt .task b{display:block;font-size:13px;margin-bottom:2px}
+    .gantt .task span{display:block;color:var(--muted);font-size:12.3px}
+    .gantt .cell{
+      cursor:pointer;
+      border-right:1px solid var(--line);
+      height:48px;
+      background:
+        linear-gradient(180deg, rgba(2,6,23,.00), rgba(2,6,23,.00));
+      position:relative;
+    }
+    .gantt .cell:nth-child(4n+2){ /* subtle month boundary every 4 weeks (since first col is task) */
+      box-shadow: inset 2px 0 0 rgba(2,6,23,.03);
+    }
+    .placeholder{
+      position:absolute;
+      inset:9px 6px;
+      border-radius:9px;
+      border:1.5px dashed rgba(29,78,216,.25);
+      background:rgba(29,78,216,.05);
+      display:none;
+    }
+    .cell:hover .placeholder{display:block}
+
+    .gantt .cell.selected{
+      background: var(--rowcolor, rgba(167,139,250,.28));
+    }
+    .gantt .cell.selected::after{
+      content:"";
+      position:absolute;
+      inset:9px 6px;
+      border-radius:9px;
+      border:1px solid rgba(255,255,255,.18);
+      pointer-events:none;
+    }
+    .footer{
+      padding:16px 28px 22px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:12.5px;
+      background:rgba(2,6,23,.01);
+    }
+    .print-hint{
+      float:right;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:6px 10px;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+    }
+    @media print{
+      body{background:#fff; color:#0f172a}
+      :root{--ink:#0f172a; --muted:#475569; --line:#e2e8f0; --card:#ffffff; --bg:#ffffff; --accent:#4f46e5; --accent-2:#6366f1;}
+      .page{margin:0; padding:0}
+      .doc{box-shadow:none; border:0}
+      .print-hint{display:none}
+      .gantt{min-width:0}
+      .gantt-scroll{overflow:visible}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="doc">
+      <div class="cover">
+        <div class="kicker"><span class="dot"></span>Proposta Strategica — 2026</div>
+        <h1>Karakter Coaching School</h1>
+        <p class="subtitle">
+          Piano di lavoro per rinnovare e consolidare il posizionamento del brand, aumentare il traffico organico, creare una community dedicata e interessata tramite i principali canali di comunicazione online, e supportare la crescita delle iscrizioni al Master attraverso una strategia integrata (brand, contenuti, funnel, eventi e partnership).
+        </p>
+        <div class="meta">
+          <span class="pill"><b>Orizzonte</b> 2026 (12 mesi)</span>
+          <span class="pill"><b>Output</b> Strategia + Esecuzione</span>
+          <span class="pill"><b>Focus</b> Branding, Growth, Performance</span>
+                  </div>
+        <div class="links" aria-label="Link principali">
+          <a href="https://www.karaktercoaching.it/" target="_blank" rel="noreferrer">Sito</a>
+          <a href="https://www.instagram.com/karaktercoachingschool/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.linkedin.com/company/karakter-coaching-school/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://www.facebook.com/KarakterCoachingSchool" target="_blank" rel="noreferrer">Facebook</a>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="section">
+          <h2>1. Obiettivi strategici (12 mesi)</h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Risultati attesi</h3>
+              <ul class="clean">
+                <li class="li"><div class="badge">1</div><div><b>Crescita iscrizioni Master</b><span>Obiettivo primario: raggiungere almeno <b>30 iscrizioni</b> all’edizione di ottobre, attraverso una pipeline commerciale strutturata.</span></div></li>
+                <li class="li"><div class="badge">2</div><div><b>Eventi a Roma</b><span>Format ripetibile per lead generation e costruzione di autorevolezza sul territorio.</span></div></li>
+                <li class="li"><div class="badge">3</div><div><b>Partnership aziendali</b><span>Attivazione e sviluppo di opportunità con HR, community e realtà affini.</span></div></li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Obiettivi di canale</h3>
+              <ul class="clean">
+                <li class="li"><div class="badge">4</div><div><b>Crescita Social (KPI da definire)</b><span>Instagram come canale core; valutazione TikTok per awareness e target giovani; LinkedIn per corporate e partnership.</span></div></li>
+                <li class="li"><div class="badge">5</div><div><b>Traffico organico (KPI da definire)</b><span>Ottimizzazione SEO e produzione contenuti per aumentare la domanda organica e supportare il funnel.</span></div></li>
+                <li class="li"><div class="badge">6</div><div><b>Riposizionamento del brand (KPI da definire)</b><span>Identità strategica e visiva distintiva e rinnovata, promessa trasformativa chiara, valorizzazione docenti e scuola.</span></div></li>
+              </ul>
+            </div>
+          </div>
+          <p class="note">Nota: gli obiettivi quantitativi verranno finalizzati durante la definizione di KPI chiave in ottica di realizzazione dell'obiettivo primario (Iscrizione al Master).</p>
+        </div>
+
+        <div class="section">
+          <h2>2. Sintesi di contesto</h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Posizionamento attuale</h3>
+              <p>
+                Karakter Coaching School presenta una base solida in termini di metodo, esperienza e qualità formativa. In questa fase, il focus è rendere più chiari e riconoscibili i pilastri del brand e tradurli in messaggi e asset coerenti su tutti i canali.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Opportunità strategica</h3>
+              <p>Il progetto mira a rinnovare e definire l'identità della scuola, rendendo efficacie la comunicazione e migliorando la chiarezza dell'offerta e qualità percepita. Consolidare la credibilità dell'azienda nella realtà di cui già fa parte.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>3. Struttura del progetto (fasi & deliverable)</h2>
+          <table class="table" role="table" aria-label="Fasi di progetto">
+            <thead>
+              <tr>
+                <th style="width:12%">Fase</th>
+                <th style="width:23%">Focus</th>
+                <th>Deliverable e output principali</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Fase 1</b></td>
+                <td><b>Brand Foundations</b></td>
+                <td>Posizionamento, architettura di brand, definizione KPI, rebranding visivo (linee guida, template e asset), brand book &amp; visual identity.</td>
+              </tr>
+
+              <tr>
+                <td><b>Fase 2</b></td>
+                <td><b>Social &amp; Contenuti</b></td>
+                <td>Piano editoriale strategico, pilastri contenuto, format seriali, piano distribuzione multi-canale (IG/LinkedIn e valutazione TikTok), monitoraggio performance.</td>
+              </tr>
+
+              <tr>
+                <td><b>Fase 3</b></td>
+                <td><b>Funnel Master</b></td>
+                <td>Architettura di acquisizione: lead magnet, landing, nurturing, call strategica, conversione; setup tracking; monitoraggio e ottimizzazione.</td>
+              </tr>
+
+              <tr>
+                <td><b>Fase 4</b></td>
+                <td><b>Eventi</b></td>
+                <td>Format evento replicabile, landing dedicata, sequenze reminder e follow-up (email/WhatsApp), scaletta e CTA, integrazione con funnel Master.</td>
+              </tr>
+
+              <tr>
+                <td><b>Fase 5</b></td>
+                <td><b>SEO &amp; Domanda Organica</b></td>
+                <td>Ottimizzazione SEO on-site, piano contenuti (blog), pillar content su coaching identitario, supporto alla crescita organica del funnel.</td>
+              </tr>
+
+              <tr>
+                <td><b>Fase 6</b></td>
+                <td><b>Partnership</b></td>
+                <td>Mappatura partner, proposta di valore (workshop, co-branding, percorsi aziendali) e materiali di proposta (deck).</td>
+              </tr></tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>4. Ambito attività (task operative)</h2>
+          
+          <h3 style="margin:0 0 10px; font-size:14.5px; letter-spacing:-.15px; color:var(--ink);">Attività Strategiche</h3>
+          <table class="table" role="table" aria-label="Attività Strategiche">
+            
+      <thead>
+        <tr>
+          <th style="width:28%">Area riferimento</th>
+          <th style="width:32%">Attività</th>
+          <th>Descrizione operativa (cosa viene prodotto)</th>
+        </tr>
+      </thead>
+    
+            <tbody>
+              <tr>
+                <td><b>Ricerca e Posizionamento</b></td>
+                <td><b>Ricerca e analisi di mercato</b></td>
+                <td>Analisi del contesto e dei trend della formazione/coaching, mappatura delle alternative percepite, lettura leve di scelta e barriere all’acquisto.</td>
+              </tr>
+<tr>
+                <td><b>Ricerca e Posizionamento</b></td>
+                <td><b>Analisi competitor</b></td>
+                <td>Analisi competitor (messaggi, offerta, funnel, creatività, canali), individuazione gap e opportunità di differenziazione.</td>
+              </tr>
+<tr>
+                <td><b>Ricerca e Posizionamento</b></td>
+                <td><b>Analisi del target</b></td>
+                <td>Segmentazione audience, analisi principali driver decisionali, obiezioni e criteri di scelta; definizione buyer personas (incluse).</td>
+              </tr>
+<tr>
+                <td><b>Ricerca e Posizionamento</b></td>
+                <td><b>Brand Strategy e Posizionamento</b></td>
+                <td>Definizione promessa trasformativa, value proposition, architettura del messaggio e direzione strategica complessiva del brand.</td>
+              </tr>
+<tr>
+                <td><b>Tracciamento</b></td>
+                <td><b>Framework KPI e metriche</b></td>
+                <td>Definizione di metriche di performance chiave e non, per il corretto tracciamento degli obiettivi fissati.</td>
+              </tr>
+<tr>
+                <td><b>Brand</b></td>
+                <td><b>Sistema di Brand Identity</b></td>
+                <td>Linee guida identitarie (tone of voice + visual), declinazioni per social/sito/eventi, regole di coerenza e riconoscibilità.</td>
+              </tr>
+<tr>
+                <td><b>Brand</b></td>
+                <td><b>Brand Book & Linee guida visual</b></td>
+                <td>Documento operativo: palette, font, griglie, mood fotografico, layout template, esempi applicativi e regole d’uso.</td>
+              </tr>
+<tr>
+                <td><b>Strategia Marketing</b></td>
+                <td><b>Strategia Marketing Organico</b></td>
+                <td>Strategia canali organici (IG/LinkedIn; valutazione TikTok), pillar e format, obiettivi e metriche.</td>
+              </tr>
+<tr>
+                <td><b>Strategia Marketing</b></td>
+                <td><b>Strategia Marketing Paid</b></td>
+                <td>Strategia campagne (Meta/Google), obiettivi, audience, messaggi per fasi funnel, piano test creatività e copy.</td>
+              </tr>
+<tr>
+                <td><b>Strategia Marketing</b></td>
+                <td><b>Strategia Remarketing</b></td>
+                <td>Struttura remarketing multi-touch (visitatori, lead, call non chiuse), sequenze e creatività, criteri di esclusione/inclusione.</td>
+              </tr>
+            </tbody>
+          </table>
+    
+<br/>
+
+          <h3 style="margin:0 0 10px; font-size:14.5px; letter-spacing:-.15px; color:var(--ink);">Attività Operative</h3>
+          <table class="table" role="table" aria-label="Attività Operative">
+            
+      <thead>
+        <tr>
+          <th style="width:28%">Area riferimento</th>
+          <th style="width:32%">Attività</th>
+          <th>Descrizione operativa (cosa viene prodotto)</th>
+        </tr>
+      </thead>
+    
+            <tbody>
+              <tr>
+                <td><b>Web & Conversion</b></td>
+                <td><b>Architettura Sito Web e copy SEO</b></td>
+                <td>Definizione struttura pagine (IA), copy completo orientato alla conversione, CTA e microcopy; integrazione principi SEO on-page.</td>
+              </tr>
+<tr>
+                <td><b>Funnel & Automation</b></td>
+                <td><b>Master Enrollment Funnel Setup</b></td>
+                <td>Lead magnet/webinar/ebook (se scelto), landing, tracciamenti, email nurturing, gestione richiesta call e pipeline lead.</td>
+              </tr>
+<tr>
+                <td><b>Content</b></td>
+                <td><b>Piano Editoriale Contenuti</b></td>
+                <td>Piano editoriale strategico (pilastri, rubriche, format seriali), regole di produzione, checklist pubblicazione e monitoraggio.</td>
+              </tr>
+<tr>
+                <td><b>Produzione</b></td>
+                <td><b>Shooting e produzione materiali per social</b></td>
+                <td>Shooting foto/video e raccolta materiali; definizione shot-list e utilizzi (social, sito, eventi, partnership).</td>
+              </tr>
+<tr>
+                <td><b>Eventi</b></td>
+                <td><b>Strategia Eventi</b></td>
+                <td>Progettazione format, landing, reminder, gestione iscrizioni, follow-up e conversione verso call strategiche / Master.</td>
+              </tr>
+<tr>
+                <td><b>Partnership</b></td>
+                <td><b>Corporate Partnership Program</b></td>
+                <td>Identificazione partner, pacchetti workshop, co-marketing, materiali di proposta (deck) e flusso gestione opportunità.</td>
+              </tr>
+<tr>
+                <td><b>SEO</b></td>
+                <td><b>SEO & Programma Blog</b></td>
+                <td>Ottimizzazione tecnica e on-page essenziale; piano editoriale blog (2 articoli/mese), brief e struttura contenuti.</td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <p class="note">
+            Nota: revisioni e allineamenti ricorrenti non sono elencati come “task”, ma sono inclusi nella governance del progetto (sezione operativa da definire).
+          </p>
+
+        </div>
+
+        <div class="section">
+          <h2>5. Timeline — Gantt (template compilabile)</h2>
+          <div class="gantt-wrap">
+            <div class="gantt-head">
+              <div>
+                <h3>Calendario di progetto</h3>
+                <p>
+                  </p>
+              </div>
+              <div class="print-hint">Suggerimento: puoi stampare in PDF dal browser</div>
+            </div>
+
+            <div class="gantt-scroll">
+              <div class="gantt" role="table" aria-label="Gantt template">
+                <!-- Months header -->
+                <div class="months" role="row">
+                  <div role="columnheader">Area</div>
+                  <div role="columnheader">Mese 1</div><div role="columnheader">Mese 2</div><div role="columnheader">Mese 3</div><div role="columnheader">Mese 4</div>
+                  <div role="columnheader">Mese 5</div><div role="columnheader">Mese 6</div><div role="columnheader">Mese 7</div><div role="columnheader">Mese 8</div>
+                  <div role="columnheader">Mese 9</div><div role="columnheader">Mese 10</div><div role="columnheader">Mese 11</div><div role="columnheader">Mese 12</div>
+                </div>
+
+                <!-- Weeks header -->
+                <div class="weeks" role="row">
+                  <div role="columnheader">Settimane</div>
+                  <div role='columnheader'>Sett. 1</div><div role='columnheader'>Sett. 2</div><div role='columnheader'>Sett. 3</div><div role='columnheader'>Sett. 4</div><div role='columnheader'>Sett. 5</div><div role='columnheader'>Sett. 6</div><div role='columnheader'>Sett. 7</div><div role='columnheader'>Sett. 8</div><div role='columnheader'>Sett. 9</div><div role='columnheader'>Sett. 10</div><div role='columnheader'>Sett. 11</div><div role='columnheader'>Sett. 12</div><div role='columnheader'>Sett. 13</div><div role='columnheader'>Sett. 14</div><div role='columnheader'>Sett. 15</div><div role='columnheader'>Sett. 16</div><div role='columnheader'>Sett. 17</div><div role='columnheader'>Sett. 18</div><div role='columnheader'>Sett. 19</div><div role='columnheader'>Sett. 20</div><div role='columnheader'>Sett. 21</div><div role='columnheader'>Sett. 22</div><div role='columnheader'>Sett. 23</div><div role='columnheader'>Sett. 24</div><div role='columnheader'>Sett. 25</div><div role='columnheader'>Sett. 26</div><div role='columnheader'>Sett. 27</div><div role='columnheader'>Sett. 28</div><div role='columnheader'>Sett. 29</div><div role='columnheader'>Sett. 30</div><div role='columnheader'>Sett. 31</div><div role='columnheader'>Sett. 32</div><div role='columnheader'>Sett. 33</div><div role='columnheader'>Sett. 34</div><div role='columnheader'>Sett. 35</div><div role='columnheader'>Sett. 36</div><div role='columnheader'>Sett. 37</div><div role='columnheader'>Sett. 38</div><div role='columnheader'>Sett. 39</div><div role='columnheader'>Sett. 40</div><div role='columnheader'>Sett. 41</div><div role='columnheader'>Sett. 42</div><div role='columnheader'>Sett. 43</div><div role='columnheader'>Sett. 44</div><div role='columnheader'>Sett. 45</div><div role='columnheader'>Sett. 46</div><div role='columnheader'>Sett. 47</div><div role='columnheader'>Sett. 48</div>
+                </div>
+
+                <!-- Rows (template) -->
+                <div class='row' role='row' style="--rowcolor: #22c55e;"><div class='task' role='cell'><b>Brand Identity</b><span>Ricerca, posizionamento e rebranding visivo</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #f97316;"><div class='task' role='cell'><b>Brand Book</b><span>Linee guida, template e asset</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #a855f7;"><div class='task' role='cell'><b>Piano Marketing</b><span>Strategia organica, paid e calendarizzazione</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #06b6d4;"><div class='task' role='cell'><b>Sito Web</b><span>Struttura, copy SEO e conversione</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #eab308;"><div class='task' role='cell'><b>Social & Contenuti</b><span>Piano editoriale, format e distribuzione</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #fb7185;"><div class='task' role='cell'><b>Strategia Eventi</b><span>Format, landing, reminder e follow-up</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #3b82f6;"><div class='task' role='cell'><b>SEO & Blog</b><span>Ottimizzazioni e contenuti continuativi</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #84cc16;"><div class='task' role='cell'><b>Partnership Program</b><span>Mappatura, proposta e materiali corporate</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+                <div class='row' role='row' style="--rowcolor: #f43f5e;"><div class='task' role='cell'><b>Funnel Master</b><span>Lead magnet, nurturing, call strategiche</span></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div><div class='cell' role='cell'><div class='placeholder'></div></div></div>
+              </div>
+            </div>
+          </div>
+          <p class="note">
+            
+          </p>
+        </div>
+
+        <div class="section">
+          <div class="footer">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function(){
+    document.querySelectorAll('.gantt .row').forEach(row => {
+      row.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', () => cell.classList.toggle('selected'));
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
