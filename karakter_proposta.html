@@ -267,6 +267,13 @@
       color:var(--muted);
       font-weight:700;
     }
+    .btn.white{
+      background:#ffffff;
+      border:1px solid rgba(255,255,255,.70);
+      color:#0b1220;
+      font-weight:900;
+    }
+    .btn.white:hover{background:#f4f4ff}
     .gantt-scroll{
       overflow:auto;
       padding:0;
@@ -502,6 +509,8 @@
       display:grid;
       gap:6px;
     }
+    .pricing-includes li{font-weight:750;}
+    .pricing-includes b{font-weight:900;}
     .pricing-side{display:grid;gap:12px;align-content:start;}
     .pricing-side h3{margin:0 0 6px;font-size:14.5px;letter-spacing:-.15px}
     .pricing-side .pricing-price{font-size:18px;margin: 0 0 6px;}
@@ -880,6 +889,15 @@
               <div class="pricing-price">€500</div>
               <p class="pricing-micro">12 mesi • montaggio + riprese</p>
             </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Altri costi (coordinamento)</h3>
+                <span class="pricing-badge">Una tantum</span>
+              </div>
+              <div class="pricing-price">€3.800</div>
+              <p class="pricing-micro">Una tantum • coordinamento + extra operativi</p>
+            </div>
           </div>
 
           <div class="pricing-allin-grid" aria-label="Pacchetto completo e condizioni">
@@ -907,17 +925,20 @@
 
               <div class="pricing-includes-title">Incluso nel pacchetto</div>
               <ul class="pricing-includes">
-                <li>Brand Identity + Brand Book</li>
+                <li>Brand Identity &amp; Brand Book</li>
                 <li>Piano Marketing completo</li>
-                <li>Sito (onepage o rifacimento completo — in base allo scenario concordato)</li>
-                <li>3 Funnel + gestione social + produzione contenuti (12 mesi)</li>
+                <li>Sito One-page (ottimizzazione) + Sito Web completo (rifacimento)</li>
+                <li>Funnel Master (3 funnel)</li>
+                <li>Gestione Social (12 mesi)</li>
+                <li>Produzione contenuti (12 mesi)</li>
+                <li>Altri costi (coordinamento)</li>
+                <li><b>+ bonus funnel completo per evento</b></li>
               </ul>
 
               <p class="pricing-note">Budget ads non incluso.</p>
 
               <div class="pricing-cta" aria-label="Azioni pacchetto">
-                <button type="button" class="btn">Richiedi proposta finale</button>
-                <button type="button" class="btn ghost">Vedi dettaglio moduli</button>
+                <a class="btn white" href="https://wa.me/393338024900" target="_blank" rel="noreferrer">Parliamone qui</a>
               </div>
             </div>
 
@@ -956,6 +977,7 @@
       marketing: 2000,
       onepage: 350,
       sito: 2500,
+      altriCosti: 3800,
       funnelPer: 1800,
       funnelNum: 3,
       socialMonthly: 1200,
@@ -968,7 +990,7 @@
     const totalFunnel = prices.funnelPer * prices.funnelNum;
     const totalSocial = prices.socialMonthly * prices.months;
     const totalContent = prices.contentMonthly * prices.months;
-    const totalModules = prices.brand + prices.marketing + prices.onepage + prices.sito + totalFunnel + totalSocial + totalContent;
+    const totalModules = prices.brand + prices.marketing + prices.onepage + prices.sito + prices.altriCosti + totalFunnel + totalSocial + totalContent;
     const discount = totalModules - prices.finalAllIn;
 
     function setText(id, value){
