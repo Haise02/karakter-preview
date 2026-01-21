@@ -374,6 +374,139 @@
       color:var(--muted);
       font-size:12px;
     }
+
+    .pricing-subtitle{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:13.5px;
+      max-width: 92ch;
+    }
+    .pricing-microgrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 900px){
+      .pricing-microgrid{grid-template-columns:1fr}
+    }
+    .pricing-pack{
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .pricing-pack:hover{
+      border-color: rgba(167,139,250,.42);
+      background: rgba(255,255,255,.04);
+    }
+    .pricing-pack-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
+    }
+    .pricing-pack-top h3{
+      margin:0;
+      font-size:14.5px;
+      letter-spacing:-.15px;
+    }
+    .pricing-badge{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 8px;
+      border:1px solid rgba(167,139,250,.28);
+      border-radius:999px;
+      background:rgba(167,139,250,.10);
+      color: var(--ink);
+      font-weight:750;
+      font-size:11.5px;
+      white-space:nowrap;
+      flex: 0 0 auto;
+    }
+    .pricing-price{
+      font-size:20px;
+      font-weight:860;
+      letter-spacing:-.3px;
+      line-height:1.1;
+      margin: 2px 0 6px;
+      color: var(--ink);
+    }
+    .pricing-micro{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .pricing-allin-grid{
+      display:grid;
+      grid-template-columns: 1.45fr .55fr;
+      gap:12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 900px){
+      .pricing-allin-grid{grid-template-columns:1fr}
+    }
+    .pricing-hero{
+      padding:16px 16px 14px;
+      background:
+        radial-gradient(900px 240px at 10% 0%, rgba(167,139,250,.20), transparent 60%),
+        radial-gradient(780px 240px at 90% 40%, rgba(124,58,237,.18), transparent 58%),
+        rgba(255,255,255,.03);
+      border-color: rgba(167,139,250,.30);
+    }
+    .pricing-hero-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .pricing-hero-top h3{margin:0;font-size:15px;letter-spacing:-.15px}
+    .pricing-hero-badge{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 8px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:var(--ink);
+      font-weight:800;
+      font-size:11.5px;
+      white-space:nowrap;
+      flex: 0 0 auto;
+    }
+    .pricing-rows{display:grid;gap:7px;margin: 6px 0 10px;}
+    .pricing-row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+    .pricing-row span:first-child{color:var(--muted);font-size:13px}
+    .pricing-row span:last-child{font-weight:850;}
+    .pricing-strike{text-decoration:line-through; text-decoration-thickness: 1px; opacity:.85;}
+    .pricing-accent{color:var(--accent);}
+    .pricing-final{
+      font-size:30px;
+      font-weight:920;
+      letter-spacing:-.6px;
+      line-height:1.05;
+      margin: 8px 0 10px;
+      color: var(--ink);
+    }
+    .pricing-includes-title{
+      margin:0 0 6px;
+      color:var(--muted);
+      font-size:12.8px;
+      font-weight:750;
+      letter-spacing:-.1px;
+    }
+    .pricing-includes{
+      margin:0;
+      padding-left:18px;
+      color:rgba(233,231,255,.86);
+      font-size:13px;
+      display:grid;
+      gap:6px;
+    }
+    .pricing-side{display:grid;gap:12px;align-content:start;}
+    .pricing-side h3{margin:0 0 6px;font-size:14.5px;letter-spacing:-.15px}
+    .pricing-side .pricing-price{font-size:18px;margin: 0 0 6px;}
+    .pricing-cta{display:flex;flex-wrap:wrap;gap:8px;margin-top: 10px;}
+    .pricing-note{margin:8px 0 0;color:var(--muted);font-size:12.5px;}
     @media print{
       body{background:#fff; color:#0f172a}
       :root{--ink:#0f172a; --muted:#475569; --line:#e2e8f0; --card:#ffffff; --bg:#ffffff; --accent:#4f46e5; --accent-2:#6366f1;}
@@ -681,11 +814,177 @@
         </div>
 
         <div class="section">
+          <h2>6. Pacchetti &amp; Investimento</h2>
+          <p class="pricing-subtitle">Micro-pacchetti modulari + opzione pacchetto completo. Budget advertising separato.</p>
+
+          <div class="pricing-microgrid" aria-label="Micro-pacchetti">
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Brand Identity &amp; Brand Book</h3>
+                <span class="pricing-badge">Una tantum</span>
+              </div>
+              <div class="pricing-price">€7.000</div>
+              <p class="pricing-micro">Una tantum • include analisi + shooting</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Piano Marketing completo</h3>
+                <span class="pricing-badge">Una tantum</span>
+              </div>
+              <div class="pricing-price">€2.000</div>
+              <p class="pricing-micro">Una tantum • strategie + KPI</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Sito One-page</h3>
+                <span class="pricing-badge">Una tantum</span>
+              </div>
+              <div class="pricing-price">€350</div>
+              <p class="pricing-micro">Una tantum • ottimizzazione</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Sito Web completo</h3>
+                <span class="pricing-badge">Una tantum</span>
+              </div>
+              <div class="pricing-price">€2.500</div>
+              <p class="pricing-micro">Una tantum • rifacimento</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Funnel Master</h3>
+                <span class="pricing-badge">Per funnel</span>
+              </div>
+              <div class="pricing-price">€1.800</div>
+              <p class="pricing-micro">3 funnel stimati • strategia + setup</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Gestione Social</h3>
+                <span class="pricing-badge">Mensile</span>
+              </div>
+              <div class="pricing-price">€1.200</div>
+              <p class="pricing-micro">12 mesi • gestione completa</p>
+            </div>
+
+            <div class="card pricing-pack">
+              <div class="pricing-pack-top">
+                <h3>Produzione contenuti</h3>
+                <span class="pricing-badge">Mensile</span>
+              </div>
+              <div class="pricing-price">€500</div>
+              <p class="pricing-micro">12 mesi • montaggio + riprese</p>
+            </div>
+          </div>
+
+          <div class="pricing-allin-grid" aria-label="Pacchetto completo e condizioni">
+            <div class="card pricing-hero">
+              <div class="pricing-hero-top">
+                <h3>Pacchetto ALL-IN 2026</h3>
+                <span class="pricing-hero-badge">Sconto incluso</span>
+              </div>
+
+              <div class="pricing-rows">
+                <div class="pricing-row">
+                  <span>Valore totale moduli</span>
+                  <span class="pricing-strike" id="pricing_total_moduli">€37.650</span>
+                </div>
+                <div class="pricing-row">
+                  <span>Sconto pacchetto</span>
+                  <span class="pricing-accent" id="pricing_sconto">€2.650</span>
+                </div>
+              </div>
+
+              <div class="pricing-row" style="margin-top:6px;">
+                <span style="color:var(--muted); font-size:13px;">Prezzo finale</span>
+                <span class="pricing-final" id="pricing_finale">€35.000</span>
+              </div>
+
+              <div class="pricing-includes-title">Incluso nel pacchetto</div>
+              <ul class="pricing-includes">
+                <li>Brand Identity + Brand Book</li>
+                <li>Piano Marketing completo</li>
+                <li>Sito (onepage o rifacimento completo — in base allo scenario concordato)</li>
+                <li>3 Funnel + gestione social + produzione contenuti (12 mesi)</li>
+              </ul>
+
+              <p class="pricing-note">Budget ads non incluso.</p>
+
+              <div class="pricing-cta" aria-label="Azioni pacchetto">
+                <button type="button" class="btn">Richiedi proposta finale</button>
+                <button type="button" class="btn ghost">Vedi dettaglio moduli</button>
+              </div>
+            </div>
+
+            <div class="pricing-side">
+              <div class="card">
+                <h3>Budget Sponsorizzate (stimato)</h3>
+                <div class="pricing-price" id="pricing_ads">€15.000 / anno</div>
+                <p class="pricing-micro">Allocazione e scaling definiti su KPI.</p>
+              </div>
+              <div class="card">
+                <h3>Bonus variabile (Eventi)</h3>
+                <div class="pricing-price">20 presenze → +€300</div>
+                <p class="pricing-micro">Compenso addizionale legato al raggiungimento della soglia.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
           <div class="footer">
         <span></span>
       </div>
     </div>
   </div>
+
+<script>
+  (function(){
+    function formatEuro(n){
+      const v = Number(n);
+      if(!Number.isFinite(v)) return '';
+      return '€' + v.toLocaleString('it-IT');
+    }
+
+    const prices = {
+      brand: 7000,
+      marketing: 2000,
+      onepage: 350,
+      sito: 2500,
+      funnelPer: 1800,
+      funnelNum: 3,
+      socialMonthly: 1200,
+      contentMonthly: 500,
+      months: 12,
+      adsAnnual: 15000,
+      finalAllIn: 35000
+    };
+
+    const totalFunnel = prices.funnelPer * prices.funnelNum;
+    const totalSocial = prices.socialMonthly * prices.months;
+    const totalContent = prices.contentMonthly * prices.months;
+    const totalModules = prices.brand + prices.marketing + prices.onepage + prices.sito + totalFunnel + totalSocial + totalContent;
+    const discount = totalModules - prices.finalAllIn;
+
+    function setText(id, value){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = value;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setText('pricing_total_moduli', formatEuro(totalModules));
+      setText('pricing_sconto', formatEuro(discount));
+      setText('pricing_finale', formatEuro(prices.finalAllIn));
+      setText('pricing_ads', `${formatEuro(prices.adsAnnual)} / anno`);
+    });
+  })();
+</script>
 
 <script>
   window.KARAKTER_SUPABASE_URL = 'https://xoypofyypyeskyhhmjbe.supabase.co';
