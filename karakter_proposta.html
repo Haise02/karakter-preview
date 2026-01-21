@@ -639,7 +639,7 @@
               </div>
               <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
                 <div class="gantt-actions" aria-label="Azioni Gantt">
-                  <button type="button" class="btn" id="copyGanttLink">Copia link con Gantt</button>
+                  <button type="button" class="btn" id="refreshGantt">Aggiorna</button>
                   <button type="button" class="btn ghost" id="resetGantt">Reset</button>
                 </div>
                 <div class="print-hint">Suggerimento: puoi stampare in PDF dal browser</div>
@@ -688,8 +688,18 @@
   </div>
 
 <script>
+  window.KARAKTER_SUPABASE_URL = 'https://xoypofyypyeskyhhmjbe.supabase.co';
+  window.KARAKTER_SUPABASE_ANON_KEY = 'sb_publishable_pPfZvfQWFLcXFDex9vW4VQ_H0rGm1Rd';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
   (function(){
     const storageKey = 'karakter_gantt_selected_v1';
+    const ganttId = 'default';
+    const supabaseUrl = window.KARAKTER_SUPABASE_URL || '';
+    const supabaseAnonKey = window.KARAKTER_SUPABASE_ANON_KEY || '';
+    const supabaseEnabled = !!(supabaseUrl && supabaseAnonKey && window.supabase);
+    const sb = supabaseEnabled ? window.supabase.createClient(supabaseUrl, supabaseAnonKey) : null;
 
     function base64UrlEncode(str){
       return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
@@ -717,17 +727,6 @@
       }
     }
 
-    function writeHashFromSelected(set){
-      try{
-        const arr = Array.from(set);
-        const encoded = encodeURIComponent(base64UrlEncode(JSON.stringify(arr)));
-        const newHash = `g=${encoded}`;
-        if(history && history.replaceState) history.replaceState(null, '', `#${newHash}`);
-        else location.hash = newHash;
-      }catch(e){
-      }
-    }
-
     function readSelected(){
       try{
         const raw = localStorage.getItem(storageKey);
@@ -747,7 +746,55 @@
       }
     }
 
-    const selected = readSelectedFromHash() || readSelected();
+    function clearHash(){
+      if(history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+      else location.hash = '';
+    }
+
+    async function loadSelectedFromRemote(){
+      if(!sb) return null;
+      const { data, error } = await sb
+        .from('gantt_cells')
+        .select('cell_key')
+        .eq('gantt_id', ganttId);
+      if(error) return null;
+      const set = new Set();
+      (data || []).forEach((r) => {
+        if(r && typeof r.cell_key === 'string') set.add(r.cell_key);
+      });
+      return set;
+    }
+
+    async function importHashToRemoteIfPresent(){
+      if(!sb) return false;
+      const fromHash = readSelectedFromHash();
+      if(!fromHash || fromHash.size === 0) return false;
+      const rows = Array.from(fromHash).map((cell_key) => ({ gantt_id: ganttId, cell_key }));
+      const { error } = await sb
+        .from('gantt_cells')
+        .upsert(rows, { onConflict: 'gantt_id,cell_key' });
+      if(error) return false;
+      clearHash();
+      return true;
+    }
+
+    async function setCellRemote(cell_key, isSelected){
+      if(!sb) return;
+      if(isSelected){
+        await sb.from('gantt_cells').upsert([{ gantt_id: ganttId, cell_key }], { onConflict: 'gantt_id,cell_key' });
+      }else{
+        await sb.from('gantt_cells').delete().eq('gantt_id', ganttId).eq('cell_key', cell_key);
+      }
+    }
+
+    async function resetRemote(){
+      if(!sb) return;
+      await sb.from('gantt_cells').delete().eq('gantt_id', ganttId);
+    }
+
+    const fromHash = readSelectedFromHash();
+    const selected = fromHash || readSelected();
+    if(fromHash) clearHash();
     writeSelected(selected);
 
     function applySelectedToDom(){
@@ -764,8 +811,68 @@
       selected.clear();
       applySelectedToDom();
       writeSelected(selected);
-      if(history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
-      else location.hash = '';
+      clearHash();
+    }
+
+    function applyCellToDom(cell_key){
+      const parts = String(cell_key).split(':');
+      const rowIndex = Number(parts[0]);
+      const cellIndex = Number(parts[1]);
+      if(!Number.isFinite(rowIndex) || !Number.isFinite(cellIndex)) return;
+      const row = document.querySelectorAll('.gantt .row')[rowIndex];
+      if(!row) return;
+      const cell = row.querySelectorAll('.cell')[cellIndex];
+      if(!cell) return;
+      cell.classList.toggle('selected', selected.has(cell_key));
+    }
+
+    async function initRealtime(){
+      if(!sb) return;
+      sb.channel(`gantt:${ganttId}`)
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'gantt_cells', filter: `gantt_id=eq.${ganttId}` },
+          (payload) => {
+            const eventType = payload && payload.eventType;
+            const newRow = payload && payload.new;
+            const oldRow = payload && payload.old;
+            if(eventType === 'INSERT' || eventType === 'UPDATE'){
+              const k = newRow && newRow.cell_key;
+              if(typeof k === 'string'){
+                selected.add(k);
+                writeSelected(selected);
+                applyCellToDom(k);
+              }
+              return;
+            }
+            if(eventType === 'DELETE'){
+              const k = oldRow && oldRow.cell_key;
+              if(typeof k === 'string'){
+                selected.delete(k);
+                writeSelected(selected);
+                applyCellToDom(k);
+              }
+            }
+          }
+        )
+        .subscribe();
+    }
+
+    async function refreshFromSource(){
+      if(sb){
+        const remote = await loadSelectedFromRemote();
+        if(remote){
+          selected.clear();
+          remote.forEach((k) => selected.add(k));
+          writeSelected(selected);
+          applySelectedToDom();
+          return;
+        }
+      }
+      const local = readSelected();
+      selected.clear();
+      local.forEach((k) => selected.add(k));
+      applySelectedToDom();
     }
 
     document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
@@ -779,28 +886,40 @@
           if(cell.classList.contains('selected')) selected.add(key);
           else selected.delete(key);
           writeSelected(selected);
+          setCellRemote(key, selected.has(key));
         });
       });
     });
 
-    const copyBtn = document.getElementById('copyGanttLink');
-    if(copyBtn){
-      copyBtn.addEventListener('click', async () => {
-        writeHashFromSelected(selected);
-        const url = location.href;
-        try{
-          if(navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(url);
-          else window.prompt('Copia questo link:', url);
-        }catch(e){
-          window.prompt('Copia questo link:', url);
-        }
+    const refreshBtn = document.getElementById('refreshGantt');
+    if(refreshBtn){
+      refreshBtn.addEventListener('click', async () => {
+        await refreshFromSource();
       });
     }
 
     const resetBtn = document.getElementById('resetGantt');
     if(resetBtn){
-      resetBtn.addEventListener('click', () => resetAll());
+      resetBtn.addEventListener('click', async () => {
+        resetAll();
+        await resetRemote();
+      });
     }
+
+    window.addEventListener('storage', (e) => {
+      if(!e) return;
+      if(e.key !== storageKey) return;
+      if(sb) return;
+      refreshFromSource();
+    });
+
+    (async () => {
+      if(sb){
+        await importHashToRemoteIfPresent();
+        await refreshFromSource();
+        await initRealtime();
+      }
+    })();
   })();
 </script>
 
