@@ -334,7 +334,7 @@
     .gantt .task b{display:block;font-size:13px;margin-bottom:2px}
     .gantt .task span{display:block;color:var(--muted);font-size:12.3px}
     .gantt .cell{
-      cursor:pointer;
+      cursor:default;
       border-right:1px solid var(--line);
       height:48px;
       background:
@@ -352,7 +352,7 @@
       background:rgba(29,78,216,.05);
       display:none;
     }
-    .cell:hover .placeholder{display:block}
+    .cell:hover .placeholder{display:none}
 
     .gantt .cell.selected{
       background: var(--rowcolor, rgba(167,139,250,.28));
@@ -780,10 +780,6 @@
                   </p>
               </div>
               <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
-                <div class="gantt-actions" aria-label="Azioni Gantt">
-                  <button type="button" class="btn" id="refreshGantt">Aggiorna</button>
-                  <button type="button" class="btn ghost" id="resetGantt">Reset</button>
-                </div>
                 <div class="print-hint">Suggerimento: puoi stampare in PDF dal browser</div>
               </div>
             </div>
@@ -1009,23 +1005,7 @@
 </script>
 
 <script>
-  window.KARAKTER_SUPABASE_URL = 'https://xoypofyypyeskyhhmjbe.supabase.co';
-  window.KARAKTER_SUPABASE_ANON_KEY = 'sb_publishable_pPfZvfQWFLcXFDex9vW4VQ_H0rGm1Rd';
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
   (function(){
-    const storageKey = 'karakter_gantt_selected_v1';
-    const ganttId = 'default';
-    const supabaseUrl = window.KARAKTER_SUPABASE_URL || '';
-    const supabaseAnonKey = window.KARAKTER_SUPABASE_ANON_KEY || '';
-    const supabaseEnabled = !!(supabaseUrl && supabaseAnonKey && window.supabase);
-    const sb = supabaseEnabled ? window.supabase.createClient(supabaseUrl, supabaseAnonKey) : null;
-
-    function base64UrlEncode(str){
-      return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-    }
-
     function base64UrlDecode(str){
       const s = str.replace(/-/g,'+').replace(/_/g,'/');
       const pad = s.length % 4;
@@ -1033,26 +1013,12 @@
       return atob(padded);
     }
 
-    function readSelectedFromHash(){
-      const hash = (location.hash || '').replace(/^#/, '');
-      if(!hash) return null;
-      const m = hash.match(/(?:^|&)g=([^&]+)/);
-      if(!m) return null;
-      try{
-        const decoded = base64UrlDecode(decodeURIComponent(m[1]));
-        const arr = JSON.parse(decoded);
-        if(!Array.isArray(arr)) return null;
-        return new Set(arr);
-      }catch(e){
-        return null;
-      }
-    }
+    const staticEncoded = 'WyIwOjMiLCIwOjQiLCIwOjUiLCI0OjciLCI0OjkiLCI0OjExIiwiMTo0IiwiMTo1IiwiMTo2IiwiNjoxNiIsIjY6MTgiLCI2OjIwIiwiNjoyMiIsIjY6MjQiLCI2OjI2IiwiMjoxMCIsIjI6MTEiLCI1OjExIiwiNToxMiIsIjM6NyIsIjM6MTIiLCIzOjEzIiwiMzoxNCIsIjQ6NSIsIjQ6MTMiLCI0OjE1IiwiNDoxNyIsIjQ6MTkiLCI0OjIxIiwiNDoyMyIsIjQ6MjUiLCI0OjI3IiwiNDoyOSIsIjQ6MzEiLCI0OjMzIiwiNDozNSIsIjQ6MzciLCI0OjM5IiwiNDo0MSIsIjQ6NDMiLCI0OjQ1IiwiNDo0NyIsIjc6MTEiLCI3OjE1IiwiNzoxOSIsIjc6MjMiLCI3OjI3IiwiNzozMSIsIjc6MzUiLCI3OjM5IiwiNzo0MyIsIjc6NDciLCI2OjI4IiwiNjozMCIsIjY6MzIiLCI2OjM0IiwiNjozNiIsIjY6MzgiLCI2OjQwIiwiNjo0MiIsIjY6NDQiLCI2OjQ2IiwiMjo3IiwiMjoxMiIsIjI6NiIsIjI6MyIsIjg6OCIsIjg6MTAiLCI4OjEyIiwiODoxNCIsIjg6MTYiLCI4OjE4IiwiODoyMCIsIjg6MjkiLCI4OjMzIiwiODozNSIsIjg6MzciLCI4OjM5IiwiODo0MSIsIjg6NDMiLCI4OjQ1IiwiODo0NyIsIjg6MjQiLCI4OjI1IiwiMToxMSIsIjA6MTAiXQ';
 
-    function readSelected(){
+    function getStaticSelected(){
       try{
-        const raw = localStorage.getItem(storageKey);
-        if(!raw) return new Set();
-        const arr = JSON.parse(raw);
+        const decoded = base64UrlDecode(staticEncoded);
+        const arr = JSON.parse(decoded);
         if(!Array.isArray(arr)) return new Set();
         return new Set(arr);
       }catch(e){
@@ -1060,85 +1026,7 @@
       }
     }
 
-    function writeSelected(set){
-      try{
-        localStorage.setItem(storageKey, JSON.stringify(Array.from(set)));
-      }catch(e){
-      }
-    }
-
-    function clearHash(){
-      if(history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
-      else location.hash = '';
-    }
-
-    async function loadSelectedFromRemote(){
-      if(!sb) return null;
-      const { data, error } = await sb
-        .from('gantt_cells')
-        .select('cell_key')
-        .eq('gantt_id', ganttId);
-      if(error){
-        console.warn('[Gantt] Supabase load failed, falling back to localStorage.', error);
-        return null;
-      }
-      const set = new Set();
-      (data || []).forEach((r) => {
-        if(r && typeof r.cell_key === 'string') set.add(r.cell_key);
-      });
-      return set;
-    }
-
-    async function upsertSelectedToRemote(set){
-      if(!sb) return false;
-      const rows = Array.from(set).map((cell_key) => ({ gantt_id: ganttId, cell_key }));
-      const { error } = await sb
-        .from('gantt_cells')
-        .upsert(rows, { onConflict: 'gantt_id,cell_key' });
-      if(error){
-        console.warn('[Gantt] Supabase upsert failed.', error);
-        return false;
-      }
-      return true;
-    }
-
-    async function importHashToRemoteIfPresent(){
-      if(!sb) return false;
-      const fromHash = readSelectedFromHash();
-      if(!fromHash || fromHash.size === 0) return false;
-      const rows = Array.from(fromHash).map((cell_key) => ({ gantt_id: ganttId, cell_key }));
-      const { error } = await sb
-        .from('gantt_cells')
-        .upsert(rows, { onConflict: 'gantt_id,cell_key' });
-      if(error){
-        console.warn('[Gantt] Supabase import from hash failed.', error);
-        return false;
-      }
-      clearHash();
-      return true;
-    }
-
-    async function setCellRemote(cell_key, isSelected){
-      if(!sb) return;
-      if(isSelected){
-        const { error } = await sb.from('gantt_cells').upsert([{ gantt_id: ganttId, cell_key }], { onConflict: 'gantt_id,cell_key' });
-        if(error) console.warn('[Gantt] Supabase write failed (insert).', error);
-      }else{
-        const { error } = await sb.from('gantt_cells').delete().eq('gantt_id', ganttId).eq('cell_key', cell_key);
-        if(error) console.warn('[Gantt] Supabase write failed (delete).', error);
-      }
-    }
-
-    async function resetRemote(){
-      if(!sb) return;
-      const { error } = await sb.from('gantt_cells').delete().eq('gantt_id', ganttId);
-      if(error) console.warn('[Gantt] Supabase reset failed.', error);
-    }
-
-    const fromHash = readSelectedFromHash();
-    const selected = fromHash || readSelected();
-    if(fromHash) clearHash();
-    writeSelected(selected);
+    const selected = getStaticSelected();
 
     function applySelectedToDom(){
       document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
@@ -1150,133 +1038,9 @@
       });
     }
 
-    function resetAll(){
-      selected.clear();
+    document.addEventListener('DOMContentLoaded', () => {
       applySelectedToDom();
-      writeSelected(selected);
-      clearHash();
-    }
-
-    function applyCellToDom(cell_key){
-      const parts = String(cell_key).split(':');
-      const rowIndex = Number(parts[0]);
-      const cellIndex = Number(parts[1]);
-      if(!Number.isFinite(rowIndex) || !Number.isFinite(cellIndex)) return;
-      const row = document.querySelectorAll('.gantt .row')[rowIndex];
-      if(!row) return;
-      const cell = row.querySelectorAll('.cell')[cellIndex];
-      if(!cell) return;
-      cell.classList.toggle('selected', selected.has(cell_key));
-    }
-
-    async function initRealtime(){
-      if(!sb) return;
-      sb.channel(`gantt:${ganttId}`)
-        .on(
-          'postgres_changes',
-          { event: '*', schema: 'public', table: 'gantt_cells', filter: `gantt_id=eq.${ganttId}` },
-          (payload) => {
-            const eventType = payload && payload.eventType;
-            const newRow = payload && payload.new;
-            const oldRow = payload && payload.old;
-            if(eventType === 'INSERT' || eventType === 'UPDATE'){
-              const k = newRow && newRow.cell_key;
-              if(typeof k === 'string'){
-                selected.add(k);
-                writeSelected(selected);
-                applyCellToDom(k);
-              }
-              return;
-            }
-            if(eventType === 'DELETE'){
-              const k = oldRow && oldRow.cell_key;
-              if(typeof k === 'string'){
-                selected.delete(k);
-                writeSelected(selected);
-                applyCellToDom(k);
-              }
-            }
-          }
-        )
-        .subscribe();
-    }
-
-    async function refreshFromSource(){
-      if(sb){
-        const remote = await loadSelectedFromRemote();
-        if(remote){
-          selected.clear();
-          remote.forEach((k) => selected.add(k));
-          writeSelected(selected);
-          applySelectedToDom();
-          return;
-        }
-      }
-      const local = readSelected();
-      selected.clear();
-      local.forEach((k) => selected.add(k));
-      applySelectedToDom();
-    }
-
-    document.querySelectorAll('.gantt .row').forEach((row, rowIndex) => {
-      const cells = Array.from(row.querySelectorAll('.cell'));
-      cells.forEach((cell, cellIndex) => {
-        const key = `${rowIndex}:${cellIndex}`;
-        if(selected.has(key)) cell.classList.add('selected');
-
-        cell.addEventListener('click', () => {
-          cell.classList.toggle('selected');
-          if(cell.classList.contains('selected')) selected.add(key);
-          else selected.delete(key);
-          writeSelected(selected);
-          setCellRemote(key, selected.has(key));
-        });
-      });
     });
-
-    const refreshBtn = document.getElementById('refreshGantt');
-    if(refreshBtn){
-      refreshBtn.addEventListener('click', async () => {
-        await refreshFromSource();
-      });
-    }
-
-    const resetBtn = document.getElementById('resetGantt');
-    if(resetBtn){
-      resetBtn.addEventListener('click', async () => {
-        resetAll();
-        await resetRemote();
-      });
-    }
-
-    window.addEventListener('storage', (e) => {
-      if(!e) return;
-      if(e.key !== storageKey) return;
-      if(sb) return;
-      refreshFromSource();
-    });
-
-    (async () => {
-      if(sb){
-        await importHashToRemoteIfPresent();
-        const remote = await loadSelectedFromRemote();
-        if(remote && remote.size === 0 && selected.size > 0){
-          const ok = await upsertSelectedToRemote(selected);
-          if(ok){
-            const remote2 = await loadSelectedFromRemote();
-            if(remote2){
-              selected.clear();
-              remote2.forEach((k) => selected.add(k));
-              writeSelected(selected);
-              applySelectedToDom();
-            }
-          }
-        }else{
-          await refreshFromSource();
-        }
-        await initRealtime();
-      }
-    })();
   })();
 </script>
 
