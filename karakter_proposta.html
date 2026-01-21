@@ -1078,12 +1078,28 @@
         .from('gantt_cells')
         .select('cell_key')
         .eq('gantt_id', ganttId);
-      if(error) return null;
+      if(error){
+        console.warn('[Gantt] Supabase load failed, falling back to localStorage.', error);
+        return null;
+      }
       const set = new Set();
       (data || []).forEach((r) => {
         if(r && typeof r.cell_key === 'string') set.add(r.cell_key);
       });
       return set;
+    }
+
+    async function upsertSelectedToRemote(set){
+      if(!sb) return false;
+      const rows = Array.from(set).map((cell_key) => ({ gantt_id: ganttId, cell_key }));
+      const { error } = await sb
+        .from('gantt_cells')
+        .upsert(rows, { onConflict: 'gantt_id,cell_key' });
+      if(error){
+        console.warn('[Gantt] Supabase upsert failed.', error);
+        return false;
+      }
+      return true;
     }
 
     async function importHashToRemoteIfPresent(){
@@ -1094,7 +1110,10 @@
       const { error } = await sb
         .from('gantt_cells')
         .upsert(rows, { onConflict: 'gantt_id,cell_key' });
-      if(error) return false;
+      if(error){
+        console.warn('[Gantt] Supabase import from hash failed.', error);
+        return false;
+      }
       clearHash();
       return true;
     }
@@ -1102,15 +1121,18 @@
     async function setCellRemote(cell_key, isSelected){
       if(!sb) return;
       if(isSelected){
-        await sb.from('gantt_cells').upsert([{ gantt_id: ganttId, cell_key }], { onConflict: 'gantt_id,cell_key' });
+        const { error } = await sb.from('gantt_cells').upsert([{ gantt_id: ganttId, cell_key }], { onConflict: 'gantt_id,cell_key' });
+        if(error) console.warn('[Gantt] Supabase write failed (insert).', error);
       }else{
-        await sb.from('gantt_cells').delete().eq('gantt_id', ganttId).eq('cell_key', cell_key);
+        const { error } = await sb.from('gantt_cells').delete().eq('gantt_id', ganttId).eq('cell_key', cell_key);
+        if(error) console.warn('[Gantt] Supabase write failed (delete).', error);
       }
     }
 
     async function resetRemote(){
       if(!sb) return;
-      await sb.from('gantt_cells').delete().eq('gantt_id', ganttId);
+      const { error } = await sb.from('gantt_cells').delete().eq('gantt_id', ganttId);
+      if(error) console.warn('[Gantt] Supabase reset failed.', error);
     }
 
     const fromHash = readSelectedFromHash();
@@ -1237,7 +1259,21 @@
     (async () => {
       if(sb){
         await importHashToRemoteIfPresent();
-        await refreshFromSource();
+        const remote = await loadSelectedFromRemote();
+        if(remote && remote.size === 0 && selected.size > 0){
+          const ok = await upsertSelectedToRemote(selected);
+          if(ok){
+            const remote2 = await loadSelectedFromRemote();
+            if(remote2){
+              selected.clear();
+              remote2.forEach((k) => selected.add(k));
+              writeSelected(selected);
+              applySelectedToDom();
+            }
+          }
+        }else{
+          await refreshFromSource();
+        }
         await initRealtime();
       }
     })();
